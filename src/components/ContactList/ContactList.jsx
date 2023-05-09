@@ -1,11 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { deleteContact } from '../../redux/actions';
+
 import { List, Li, DeleteButton, Text } from './ContactList.styled';
 
-export function ContactList({ contacts, onDelete }) {
+export function ContactList() {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
+  const onDelete = id => {
+    dispatch(deleteContact(id));
+  };
+
+  const filteredAndMemoedcontacts = useMemo(
+    () =>
+      contacts.filter(contact =>
+        contact.name.toLowerCase().includes(filter.toLowerCase())
+      ),
+    [contacts, filter]
+  );
+
   return (
     <List>
-      {contacts.map(({ id, number, name }) => {
+      {filteredAndMemoedcontacts.map(({ id, number, name }) => {
         return (
           <Li key={id}>
             <Text>
@@ -20,16 +39,5 @@ export function ContactList({ contacts, onDelete }) {
     </List>
   );
 }
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onDelete: PropTypes.func.isRequired,
-};
 
 export default ContactList;

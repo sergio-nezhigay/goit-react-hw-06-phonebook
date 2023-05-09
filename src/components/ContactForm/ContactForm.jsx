@@ -1,9 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { useRef } from 'react';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
+
+import { addContact } from '../../redux/actions';
 
 import {
   StyledForm,
@@ -34,10 +37,24 @@ let schema = object({
     .required(),
 });
 
-export function ContactForm(props) {
+export function ContactForm() {
+  const dispatch = useDispatch();
   const nameID = useRef(nanoid());
   const numberID = useRef(nanoid());
-  const { onSubmit } = props;
+  const contacts = useSelector(state => state.contacts);
+
+  const onSubmit = ({ name, number }, { resetForm }) => {
+    if (
+      contacts.some(contact =>
+        contact.name.toLowerCase().includes(name.toLowerCase())
+      )
+    ) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
+    dispatch(addContact(name, number));
+    resetForm();
+  };
 
   return (
     <Formik
@@ -67,7 +84,3 @@ export function ContactForm(props) {
     </Formik>
   );
 }
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};

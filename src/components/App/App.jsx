@@ -1,15 +1,10 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useFavicon, useTitle } from 'react-use';
 import addressIcon from './address-book.ico';
 
-import {
-  initializeContacts,
-  addContact,
-  setFilter,
-  deleteContact,
-} from '../../redux/actions';
+import { initializeContacts } from '../../redux/actions';
 
 import {
   Container,
@@ -26,7 +21,6 @@ export function App() {
   useFavicon(addressIcon);
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter);
   useEffect(() => {
     try {
       const contactsStorage = JSON.parse(localStorage.getItem(MY_CONTACTS));
@@ -47,50 +41,16 @@ export function App() {
     }
   }, [contacts]);
 
-  const onSubmit = ({ name, number }, { resetForm }) => {
-    if (
-      contacts.some(contact =>
-        contact.name.toLowerCase().includes(name.toLowerCase())
-      )
-    ) {
-      alert(`${name} is already in contacts.`);
-      return;
-    }
-
-    dispatch(addContact(name, number));
-    dispatch(setFilter(''));
-    resetForm();
-  };
-
-  const onChangeFilter = e => {
-    dispatch(setFilter(e.target.value));
-  };
-
-  const onDelete = id => {
-    dispatch(deleteContact(id));
-  };
-
-  const filteredAndMemoedcontacts = useMemo(
-    () =>
-      contacts.filter(contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      ),
-    [contacts, filter]
-  );
-
   return (
     <Container>
       <Section title="Phonebook">
-        <ContactForm onSubmit={onSubmit} />
+        <ContactForm />
       </Section>
       <Section title="Contacts">
         {contacts.length ? (
           <>
-            <Filter filter={filter} onChange={onChangeFilter} />
-            <ContactList
-              contacts={filteredAndMemoedcontacts}
-              onDelete={onDelete}
-            />
+            <Filter />
+            <ContactList />
           </>
         ) : (
           <p>No contacts</p>
