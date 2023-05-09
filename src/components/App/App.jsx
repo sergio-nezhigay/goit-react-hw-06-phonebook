@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useFavicon, useTitle } from 'react-use';
-import addressIcon from './address-book.ico';
+import addressIcon from './icons8-address-book-32.png';
 
 import { initializeContacts } from '../../redux/actions';
-
+// move selector to slice!!!
 import {
   Container,
   Section,
