@@ -5,16 +5,9 @@ const filterSlice = createSlice({
   name: 'filter',
   initialState: filterInitialState,
   reducers: {
-    setFilter: {
-      reducer(state, action) {
-        state = action.payload;
-        return action.payload;
-      },
-      prepare(text) {
-        return {
-          payload: text,
-        };
-      },
+    setFilter(state, action) {
+      state = action.payload;
+      return state;
     },
   },
 });
