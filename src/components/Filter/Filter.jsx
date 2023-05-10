@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 import { Label } from 'components/ContactForm/ContactForm.styled';
 import { InputShort } from './Filter.styled';
 
-import { setFilter } from '../../redux/actions';
+// import { setFilter } from '../../redux/actions';
+import { setFilter } from 'redux/filterSlice';
 
 export function Filter() {
   const filter = useSelector(state => state.filter);

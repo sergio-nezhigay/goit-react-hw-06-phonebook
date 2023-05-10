@@ -6,7 +6,8 @@ import { useRef } from 'react';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 
-import { addContact } from '../../redux/actions';
+// import { addContact } from '../../redux/actions';
+import { addContact } from 'redux/contactsSlice';
 
 import {
   StyledForm,

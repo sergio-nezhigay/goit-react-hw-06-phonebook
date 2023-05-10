@@ -4,8 +4,10 @@ import { useSelector } from 'react-redux';
 import { useFavicon, useTitle } from 'react-use';
 import addressIcon from './icons8-address-book-32.png';
 
-import { initializeContacts } from '../../redux/actions';
-// move selector to slice!!!
+// import { initializeContacts } from '../../redux/actions';
+import { initializeContacts } from 'redux/contactsSlice';
+// move selector to slice?!!!
+// make constamts for action names!
 import {
   Container,
   Section,
