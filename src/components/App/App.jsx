@@ -3,8 +3,6 @@ import { useFavicon, useTitle } from 'react-use';
 import addressIcon from '../../assets/images/icons8-address-book-32.png';
 import { getContacts } from 'redux/selectors';
 
-// move selector to slice?!!!
-// make constamts for action names!
 import {
   Container,
   Section,
