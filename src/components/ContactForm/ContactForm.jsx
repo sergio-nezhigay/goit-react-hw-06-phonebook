@@ -1,13 +1,11 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 
-// import { addContact } from '../../redux/actions';
 import { addContact } from 'redux/contactsSlice';
+import { getContacts } from 'redux/selectors';
 
 import {
   StyledForm,
@@ -42,7 +40,7 @@ export function ContactForm() {
   const dispatch = useDispatch();
   const nameID = useRef(nanoid());
   const numberID = useRef(nanoid());
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getContacts);
 
   const onSubmit = ({ name, number }, { resetForm }) => {
     if (

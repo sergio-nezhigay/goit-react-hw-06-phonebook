@@ -1,15 +1,13 @@
-import React from 'react';
-import { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-// import { deleteContact } from '../../redux/actions';
-import { deleteContact } from 'redux/contactsSlice';
+import React, { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { deleteContact } from 'redux/contactsSlice';
+import { getContacts } from 'redux/selectors';
 import { List, Li, DeleteButton, Text } from './ContactList.styled';
 
 export function ContactList() {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getContacts);
   const filter = useSelector(state => state.filter);
   const onDelete = id => {
     dispatch(deleteContact(id));

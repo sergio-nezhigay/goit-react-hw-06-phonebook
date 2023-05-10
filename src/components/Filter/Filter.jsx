@@ -1,17 +1,17 @@
 import React from 'react';
-import { nanoid } from 'nanoid';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { Label } from 'components/ContactForm/ContactForm.styled';
 import { InputShort } from './Filter.styled';
-
-// import { setFilter } from '../../redux/actions';
 import { setFilter } from 'redux/filterSlice';
+import { getFilter } from 'redux/selectors';
 
 export function Filter() {
-  const filter = useSelector(state => state.filter);
+  const filter = useSelector(getFilter);
   const filterInputId = nanoid();
   const dispatch = useDispatch();
+
   const onChange = e => {
     dispatch(setFilter(e.target.value));
   };
