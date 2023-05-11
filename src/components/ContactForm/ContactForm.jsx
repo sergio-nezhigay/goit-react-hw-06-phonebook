@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from '@reduxjs/toolkit';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 
@@ -38,8 +37,8 @@ let schema = object({
 
 export function ContactForm() {
   const dispatch = useDispatch();
-  const nameID = useRef(nanoid());
-  const numberID = useRef(nanoid());
+  const id = useId().replace(/:/g, '');
+
   const contacts = useSelector(getContacts);
 
   const onSubmit = ({ name, number }, { resetForm }) => {
@@ -62,20 +61,20 @@ export function ContactForm() {
       onSubmit={onSubmit}
     >
       <StyledForm>
-        <Label htmlFor={nameID.current}>Name</Label>
+        <Label htmlFor={'name_' + id}>Name</Label>
         <StyledField
           type="text"
           name="name"
           placeholder="Enter the name"
-          id={nameID.current}
+          id={'name_' + id}
         />
         <ErrorMessage component={ErrorStyledMessage} name="name" />
-        <Label htmlFor={numberID.current}>Number</Label>
+        <Label htmlFor={'number_' + id}>Number</Label>
         <StyledField
           type="tel"
           name="number"
           placeholder="Enter the number"
-          id={numberID.current}
+          id={'number_' + id}
         />
         <ErrorMessage component={ErrorStyledMessage} name="number" />
         <Button type="submit">Add Contact</Button>
